@@ -2,11 +2,9 @@
 #include <sys/time.h>
 #include <time.h>
 
-#include "ge0.h"
-#include "ge2.h"
-#define A(i, j) A[(i) * n + j]
-#define B(i, j) B[(i) * n + j]
+#include "ge3.h"
 
+#define B(i, j) B[(i) * n + j]
 static double gtod_ref_time_sec = 0.0;
 
 /* Adapted from the bl2_clock() routine in the BLIS library */
@@ -23,11 +21,20 @@ dclock ()
     return the_time;
 }
 
+void
+ge_check (double *A, const size_t n)
+{
+    for (size_t k = 0; k < n; k++)
+        for (size_t i = k + 1; i < n; i++)
+            for (size_t j = k + 1; j < n; j++)
+                A (i, j) -= A (k, j) * (A (i, k) / A (k, k));
+}
+
 int
 main (int argc, const char *argv[])
 {
     // Measure GFLOPS
-    for (size_t n = 100; n < 1600; n += 50)
+    for (size_t n = 100; n < 1550; n += 50)
     {
         double t;
         double GFLOPS = (2.0 / 3.0) * n * n * n * 1.0e-09;
@@ -47,7 +54,7 @@ main (int argc, const char *argv[])
         t = dclock ();
         ge (A, n);
         t = dclock () - t;
-        printf ("%ld %le\n", n, GFLOPS / t);
+        printf ("%ld %le %les\n", n, GFLOPS / t, t);
 
         // Check correctness
         double checkA = 0.0;
@@ -55,7 +62,7 @@ main (int argc, const char *argv[])
             for (size_t j = 0; j < n; j++)
                 checkA += A (i, j);
 
-        ge_naive (B, n);
+        ge_check (B, n);
 
         double checkB = 0.0;
         for (size_t i = 0; i < n; i++)
