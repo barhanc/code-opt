@@ -7,7 +7,7 @@
 #define A(i, j) A[(i) * n + j]
 
 // Umieszcenie zmiennych w rejestrach
-// 1-D tablica indeksowana poprzez makro
+// Jednowymiamorwa tablica indeksowana poprzez makro
 
 void
 ge (double *A, const size_t n)

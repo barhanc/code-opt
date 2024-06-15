@@ -10,7 +10,6 @@
 // Rozwinięcie pętli o 4
 // Użycie AVX2
 // Użycie fnmadd()
-
 void
 ge (double *A, const size_t n)
 {

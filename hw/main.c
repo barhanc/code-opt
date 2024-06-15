@@ -2,8 +2,9 @@
 #include <sys/time.h>
 #include <time.h>
 
-#include "ge3.h"
+#include "ge5.h"
 
+#define A(i, j) A[(i) * n + j]
 #define B(i, j) B[(i) * n + j]
 static double gtod_ref_time_sec = 0.0;
 

@@ -18,3 +18,4 @@ L1 Cache	80 KB (P) / 96 KB (E)/core
 L2 Cache	1.25 MB (P) / 2MB (4E)/core
 L3 Cache	up to 30 MB
 """
+# gcc -Wall -O2 -mavx -march=alderlake main.c -fopenmp -lm
