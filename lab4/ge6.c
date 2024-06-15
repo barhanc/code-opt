@@ -36,8 +36,7 @@ ge (double *A, size_t SIZE)
     register int i, j, k;
 
     register __m256d mm_multiplier;
-    register __m256d r0, r1,
-        rw0, rw1;
+    register __m256d r0, r1, rw0, rw1;
 
     for (k = 0; k < SIZE; k++)
     {
