@@ -13,14 +13,13 @@
 void
 ge (double *A, const int n)
 {
-    const int s2 = 36;
+    const int s2 = 32;
     const int s1 = 16 * 3;
 
     register double c, m;
     register __m256d m_vec;
     register __m256d y_vec0, y_vec1, y_vec2, y_vec3;
     register __m256d A_vec0, A_vec1, A_vec2, A_vec3;
-
     register int i, j, k, ii, jj;
 
     for (k = 0; k < n; k++)

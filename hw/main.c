@@ -3,7 +3,7 @@
 #include <sys/time.h>
 #include <time.h>
 
-#include "ge4.h"
+#include "ge5.h"
 
 #define A(i, j) A[(i) * n + j]
 #define B(i, j) B[(i) * n + j]
@@ -36,7 +36,7 @@ int
 main (int argc, const char *argv[])
 {
     // Measure GFLOPS
-    for (size_t n = 20; n < 1550; n += 20)
+    for (size_t n = 20; n < 1520; n += 20)
     {
         double t;
         double GFLOPS = (2.0 / 3.0) * n * n * n * 1.0e-09;
