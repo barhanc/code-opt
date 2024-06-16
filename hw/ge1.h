@@ -10,9 +10,9 @@
 // Jednowymiamorwa tablica indeksowana poprzez makro
 
 void
-ge (double *A, const size_t n)
+ge (double *A, const int n)
 {
-    register size_t i, j, k;
+    register int i, j, k;
     register double c, m;
 
     for (k = 0; k < n; k++)
