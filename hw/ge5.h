@@ -3,11 +3,12 @@
 #include <string.h>
 
 #include <immintrin.h>
+#include <omp.h>
 
 #define A(i, j) A[(i) * n + j]
 #define min(x, y) (((x) < (y)) ? (x) : (y))
 
-// Obliczanie elementów wynikowych macierzy w blokach s2 x s1
+// Użycie openmp
 
 void
 ge (double *A, const int n)
@@ -29,6 +30,7 @@ ge (double *A, const int n)
         for (i = k + 1; i < n; i++)
             x[i - k - 1] = -(A (i, k) / c), y[i - k - 1] = A (k, i);
 
+#pragma omp parallel for num_threads(8)
         for (ii = k + 1; ii < n; ii += s2)
             for (jj = k + 1; jj < n; jj += s1)
                 for (i = ii; i < min (ii + s2, n); i++)

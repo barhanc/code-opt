@@ -1,3 +1,4 @@
+#include <papi.h>
 #include <stdio.h>
 #include <sys/time.h>
 #include <time.h>
@@ -35,7 +36,7 @@ int
 main (int argc, const char *argv[])
 {
     // Measure GFLOPS
-    for (size_t n = 100; n < 1550; n += 50)
+    for (size_t n = 100; n < 1550; n += 20)
     {
         double t;
         double GFLOPS = (2.0 / 3.0) * n * n * n * 1.0e-09;
