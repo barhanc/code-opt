@@ -42,6 +42,7 @@ main (int argc, const char *argv[])
         double GFLOPS = (2.0 / 3.0) * n * n * n * 1.0e-09;
         double *A = malloc (n * n * sizeof (double));
         double *B = malloc (n * n * sizeof (double));
+        double *_A = malloc (n * n * sizeof (double));
 
         // Generate random matrix
         srand (1);
@@ -52,18 +53,6 @@ main (int argc, const char *argv[])
         // Copy matrix A to B to check correctness with naive algorithm
         memcpy (B, A, n * n * sizeof (double));
 
-        // Measure time
-        t = dclock ();
-        ge (A, n);
-        t = dclock () - t;
-        printf ("[%ld, %le],\n", n, GFLOPS / t);
-
-        // Check correctness
-        double checkA = 0.0;
-        for (size_t i = 0; i < n; i++)
-            for (size_t j = 0; j < n; j++)
-                checkA += A (i, j);
-
         ge_check (B, n);
 
         double checkB = 0.0;
@@ -71,11 +60,34 @@ main (int argc, const char *argv[])
             for (size_t j = 0; j < n; j++)
                 checkB += B (i, j);
 
-        if (checkA != checkB)
-            printf ("ERROR %f %f\n", checkA, checkB);
+        double best = 100000;
+
+        for (size_t trial = 0; trial < 10; trial++)
+        {
+            memcpy (_A, A, n * n * sizeof (double));
+
+            // Measure time
+            t = dclock ();
+            ge (_A, n);
+            t = dclock () - t;
+            if (t < best)
+                best = t;
+
+            double checkA = 0.0;
+            for (size_t i = 0; i < n; i++)
+                for (size_t j = 0; j < n; j++)
+                    checkA += _A[i * n + j];
+
+            if (checkA != checkB)
+                printf ("ERROR %f %f\n", checkA, checkB);
+        }
+        printf ("[%ld, %le],\n", n, GFLOPS / best);
+
+        // Check correctness
 
         free (A);
         free (B);
+        free (_A);
     }
 
     return 0;

@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include <immintrin.h>
+#include <omp.h>
 
 #define A(i, j) A[(i) * n + j]
 #define max(x, y) (((x) < (y)) ? (y) : (x))
